@@ -1,0 +1,5 @@
+(clear)
+(load "factBase.clp")
+(load "backtrackingSearch.clp")
+(load "constraintsBase.clp")
+(reset)
