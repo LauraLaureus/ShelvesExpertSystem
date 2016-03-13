@@ -14,19 +14,19 @@
 		(type INTEGER)))
 
 (deffacts datos
-; numero de variables del problema ->9 3 estaterias de 3 libros 
+; numero de variables del problema ->9 3 estaterias de 3 libros  n nulo :D
   (estructura 9)	
 
   ; dominios para cada variable
-  (dominio 1 a b c d e f g) 
-  (dominio 2 a b c d e f g) 
-  (dominio 3 a b c d e f g)
-  (dominio 4 a b c d e f g)
-  (dominio 5 a b c d e f g)
-  (dominio 6 a b c d e f g)
-  (dominio 7 a b c d e f g)
-  (dominio 8 a b c d e f g)
-  (dominio 9 a b c d e f g)
+  (dominio 1 a b c d e f g n) 
+  (dominio 2 a b c d e f g n) 
+  (dominio 3 a b c d e f g n)
+  (dominio 4 a b c d e f g n)
+  (dominio 5 a b c d e f g n)
+  (dominio 6 a b c d e f g n)
+  (dominio 7 a b c d e f g n)
+  (dominio 8 a b c d e f g n)
+  (dominio 9 a b c d e f g n)
   
 ;solucion
 	(solucion))
