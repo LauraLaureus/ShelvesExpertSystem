@@ -18,15 +18,15 @@
   (estructura 9)	
 
   ; dominios para cada variable
-  (dominio 1 a b c d e f g n) 
-  (dominio 2 a b c d e f g n) 
-  (dominio 3 a b c d e f g n)
-  (dominio 4 a b c d e f g n)
-  (dominio 5 a b c d e f g n)
-  (dominio 6 a b c d e f g n)
-  (dominio 7 a b c d e f g n)
-  (dominio 8 a b c d e f g n)
-  (dominio 9 a b c d e f g n)
+  (dominio 1 a b c d e f g n n1) 
+  (dominio 2 a b c d e f g n n1) 
+  (dominio 3 a b c d e f g n n1)
+  (dominio 4 a b c d e f g n n1)
+  (dominio 5 a b c d e f g n n1)
+  (dominio 6 a b c d e f g n n1)
+  (dominio 7 a b c d e f g n n1)
+  (dominio 8 a b c d e f g n n1)
+  (dominio 9 a b c d e f g n n1)
   
 ;solucion
 	(solucion))
@@ -36,7 +36,7 @@
     (slot nombre)
     (slot anno)
     (slot categoria)
-    (slot key (allowed-values a b c d e f g))
+    (slot key (allowed-values a b c d e f g n n1))
 )
 
 
@@ -96,8 +96,18 @@
         (categoria Manual)
         (key g)
     )
+    
+    
+    (libro
+        (nombre nulo)
+        (anno 0)
+        (categoria nulo)
+        (key n)
+    )
 
 )
+
+
 
 ;(deffacts informacion-control
 ;	(secuencia-fases avances restricciones))
