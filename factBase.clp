@@ -105,6 +105,12 @@
         (key n)
     )
 
+    (libro
+        (nombre nulo1)
+        (anno 0)
+        (categoria nulo)
+        (key n1)
+    )
 )
 
 
