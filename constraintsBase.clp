@@ -107,6 +107,39 @@
     (modify ?f (eliminado 1))
     (assert (vuelta-atras))
 )
+;Elimina solucion donde los libros de novela no estan ordenados por fechas 
+(defrule ordenados_por_fecha_libros_novela
+    (declare (salience 200))
+    (fase avance)
+    (not (vuelta-atras))
+    (solucion  $?inicio ?a ?b ?c $?final)
+    (test (= (mod (length$ ?inicio) 3) 0))
+    ?f <- (elementos (elemento ?a))
+    (libro (key ?a)(anno ?f1)(categoria ?cat1))
+    (libro (key ?b)(anno ?f2)(categoria ?cat1))
+	(libro (key ?c)(anno ?f3)(categoria ?cat1))
+	(or (test(> ?f1 ?f2)) (test(> ?f2 ?f3)))
+    =>
+    (modify ?f (eliminado 1))
+    (assert (vuelta-atras))
+)
+;Elimina solucion donde los libros de las otras categorias que no estan ordenados por fechas 
+(defrule ordenados_por_fecha_libros_distintos_novela
+    (declare (salience 200))
+    (fase avance)
+    (not (vuelta-atras))
+    (solucion  $?inicio ?a ?b $?final)
+    (test (= (mod (length$ ?inicio) 3) 0))
+    ?f <- (elementos (elemento ?a))
+    (libro (key ?a)(anno ?f1)(categoria ?cat1))
+    (libro (key ?b)(anno ?f2))
+	(and (test(> ?f1 ?f2)) (test(neq ?cat1 Novela)))
+    =>
+    (modify ?f (eliminado 1))
+    (assert (vuelta-atras))
+)
+
+	
 	
 
 
