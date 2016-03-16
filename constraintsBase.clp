@@ -10,8 +10,7 @@
 )
 ;;; candidata a ser borrada
 
-
-;;coger las tres primeras valores de la solucion, comprobar si tienen la misma categoia o la categoria nula. Eliminar los que no cumplan la restriccion.
+;No se repiten elementos
 
 (defrule menos_combinaciones
     (declare (salience 200))
@@ -24,61 +23,75 @@
     (assert (vuelta-atras))
 )
 
-(defrule primeraCategoria
+;Los dos nulos no pueden aparecer juntos
+
+(defrule filtro_nulos_separados
     (declare (salience 200))
     (fase avance)
     (not (vuelta-atras))
-    (solucion ?a ?b $?final)
+    (solucion $? ?a  ?b $?)
+    (libro (key ?a)(categoria ?cat1))
+    (libro (key ?b)(categoria ?cat1))
+    (test (eq ?cat1 nulo)) 
     ?f <- (elementos (elemento ?b))
-	(libro (key ?a)(categoria ?cat1))
+   =>
+    (modify ?f (eliminado 1))
+    (assert (vuelta-atras))
+)
+
+; Junta dos libros de la misma categoria en el mismo estante
+(defrule categorias
+    (declare (salience 200))
+    (fase avance)
+    (not (vuelta-atras))
+    (solucion  $?inicio ?a ?b $?final)
+    (test (= (mod (length$ ?inicio) 3) 0))
+    ?f <- (elementos (elemento ?a))
+    (libro (key ?a)(categoria ?cat1))
     (libro (key ?b)(categoria ?cat2))
-	(or (test(neq ?cat1 ?cat2)) (test(eq ?cat2 nulo))) 
+    (or (test(neq ?cat1 ?cat2)) (test(eq ?cat2 nulo)))
     =>
     (modify ?f (eliminado 1))
     (assert (vuelta-atras))
 )
 
-;(defrule filtro_nulos_separados
-;    (declare (salience 200))
-;    (fase avance)
-;    (not (vuelta-atras))
-;   (solucion $? ?a  ?b $?)
-;    (libro (key ?a)(categoria ?cat1))
-;   (libro (key ?b)(categoria ?cat1))
-;    (test (eq ?cat1 nulo)) 
-;    ?f <- (elementos (elemento ?b))
-;   =>
-;   (modify ?f (eliminado 1))
-;    (assert (vuelta-atras))
-;)
+;Elimina aquellas combinaciones que tienen dos libros de la misma categoria juntos y uno separado despues
+(defrule categorias_compact_forward
+    (declare (salience 200))
+    (fase avance)
+    (not (vuelta-atras))
+    (solucion  $? ?a $?medio ?b $?intermedio ?c $?)
+    (test (>  (length$ ?intermedio)  0))
+    (test (>  (length$ ?medio)  -1))
+    (libro (key ?a)(categoria ?cat1))
+    (libro (key ?b)(categoria ?cat1))
+    (libro (key ?c)(categoria ?cat1))
+    ?f <- (elementos (elemento ?a))
+    =>
+    (modify ?f (eliminado 1))
+    (assert (vuelta-atras))
 
-;(defrule nulos_al_final
-;    (declare (salience 200))
-;    (fase avance)
-;    (not (vuelta-atras))
-;    (solucion $?c ?a  $?)
-    
-;)
+)
 
-;(defrule categorias
-    ;(declare (salience 200))
-    ;(fase avance)
-    ;(not (vuelta-atras))
-    ;(solucion $?i ?a ?b ?c $?d)
-    ;(test (eq (mod (length$ $?i) 3) 0))
-	;(test (eq (mod (length$ $?d) 3) 0))
-    ;(libro (key ?a)(categoria ?cat1))
-    ;(libro (key ?b)(categoria ?cat2))
-    ;(test (neq ?cat1 ?cat2))
-    ;(or
-;        (test (eq ?cat1 nulo))
-;        (test (eq ?cat2 nulo))
-    ;)
-;     ?f <- (elementos (elemento ?b))
-     ;=>
-;    (modify ?f (eliminado 1))
-;    (assert (vuelta-atras))
-	 ;(printout t "Elementos por delante " $?i " Elementos a mirar " ?a ?b ?c " Elementos finales " $?d crlf)
-;)
+;Elimina aquellas combinaciones que tienen dos libros de la misma categoria juntos y uno separado antes
+(defrule categorias_compact_backwards
+    (declare (salience 200))
+    (fase avance)
+    (not (vuelta-atras))
+    (solucion  $? ?a $?medio ?b $?intermedio ?c $?)
+    (test (>  (length$ ?intermedio)  -1))
+    (test (>  (length$ ?medio)  0))
+    (libro (key ?a)(categoria ?cat1))
+    (libro (key ?b)(categoria ?cat1))
+    (libro (key ?c)(categoria ?cat1))
+    ?f <- (elementos (elemento ?a))
+    =>
+    (modify ?f (eliminado 1))
+    (assert (vuelta-atras))
+
+)
+
+
+
 
 

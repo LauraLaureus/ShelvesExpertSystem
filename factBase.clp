@@ -38,7 +38,10 @@
     (slot categoria)
     (slot key (allowed-values a b c d e f g n n1))
 )
-
+(deftemplate categoria
+    (slot nombre)
+    (multislot keys)
+)
 
 (deffacts matching_table
  
