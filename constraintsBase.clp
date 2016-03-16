@@ -90,6 +90,24 @@
     (assert (vuelta-atras))
 
 )
+;Elimina aquellas combinaciones con varias categorias en una estanteria
+(defrule categorias_misma_estanteria
+    (declare (salience 200))
+    (fase avance)
+    (not (vuelta-atras))
+    (solucion  $?inicio ?a ?b ?c $?final)
+    (test (= (mod (length$ ?inicio) 3) 0))
+    ?f <- (elementos (elemento ?a))
+    (libro (key ?a)(categoria ?cat1))
+    (libro (key ?b)(categoria ?cat2))
+	(libro (key ?c)(categoria ?cat3))
+    (and (test(eq ?cat1 ?cat2)) (test(eq ?cat1 Novela)))
+	(test(neq ?cat3 Novela))
+    =>
+    (modify ?f (eliminado 1))
+    (assert (vuelta-atras))
+)
+	
 
 
 
