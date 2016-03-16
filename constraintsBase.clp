@@ -32,8 +32,7 @@
     ?f <- (elementos (elemento ?b))
 	(libro (key ?a)(categoria ?cat1))
     (libro (key ?b)(categoria ?cat2))
-	(neq ?cat1 ?cat2) 
-	(=(str-compare ?cat2 "nulo")0)
+	(or (test(neq ?cat1 ?cat2)) (test(eq ?cat2 nulo))) 
     =>
     (modify ?f (eliminado 1))
     (assert (vuelta-atras))
